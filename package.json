@@ -1,0 +1,22 @@
+{
+  "name": "express-quiz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weronikaolejniczak/express-quiz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weronikaolejniczak/express-quiz/issues"
+  },
+  "homepage": "https://github.com/weronikaolejniczak/express-quiz#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
