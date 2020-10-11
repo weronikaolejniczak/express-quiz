@@ -10,15 +10,36 @@ function fillQuestionElements(data) {
 
 function showNextQuestion() {
     fetch('/question', {
-            method: 'GET',
+        method: 'GET',
+    })
+        .then(res => res.json())
+        .then(data => {
+            fillQuestionElements(data);
         })
-            .then(res => res.json())
-            .then(data => {
-                fillQuestionElements(data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 showNextQuestion();
+
+function sendAnswer(answerIndex) {
+    fetch(`/answer/${answerIndex}`, {
+        method: 'POST',
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+const buttons = document.querySelectorAll('button');
+for (const button of buttons) {
+    button.addEventListener('click', function() {
+        const answerIndex = this.dataset.answer;
+        sendAnswer(Number(answerIndex));
+    })
+}
