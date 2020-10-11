@@ -1,1 +1,1 @@
-# Express quiz backend application
+# Express quiz application
