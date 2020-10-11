@@ -1,11 +1,21 @@
 const question = document.querySelector('#question');
+const gameBoard = document.querySelector('#game-board');
+const status = document.querySelector('#scoreboard > h2');
 
 function fillQuestionElements(data) {
-    question.innerText = data.question;
-    data.answers.forEach((answer, index) => {
-        const answerElement = document.querySelector(`#answer${Number(index) + 1}`);
-        answerElement.innerText = answer;
-    });
+    if (data.winner === true) {
+        gameBoard.style.display = 'none';
+        status.innerText = 'WINNER!'
+    } else if (data.loser === true) {
+        gameBoard.style.display = 'none';
+        status.innerText = 'You lost. Try again!'
+    } else {
+        question.innerText = data.question;
+        data.answers.forEach((answer, index) => {
+            const answerElement = document.querySelector(`#answer${Number(index) + 1}`);
+            answerElement.innerText = answer;
+        });
+    }
 };
 
 function showNextQuestion() {
@@ -29,7 +39,7 @@ function sendAnswer(answerIndex) {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            handleAnswerFeedback(data);
         })
         .catch(err => {
             console.log(err);
@@ -42,4 +52,11 @@ for (const button of buttons) {
         const answerIndex = this.dataset.answer;
         sendAnswer(Number(answerIndex));
     })
+}
+
+const scoreSpan = document.querySelector('#score');
+
+function handleAnswerFeedback(data) {
+    scoreSpan.innerText = data.score;
+    showNextQuestion();
 }
