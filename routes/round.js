@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { maxHeaderSize } = require('http');
 
 function roundRoute(app) {
     let score = 0;
@@ -10,7 +11,7 @@ function roundRoute(app) {
         if (err) throw err;
         else {
             questions = JSON.parse(content);
-        }
+        };
     });
     
     app.get('/question', (req, res) => {
@@ -31,7 +32,7 @@ function roundRoute(app) {
             res.json({
                 question, answers
             });
-        }
+        };
     });
 
     app.post('/answer/:index', (req, res) => {
@@ -49,20 +50,20 @@ function roundRoute(app) {
             score++;
         } else {
             isGameOver = true;
-        }
+        };
 
         res.json({
             correct: isCorrect,
             score
         });
-    })
+    });
 
     app.get('/help/friend', (req, res) => {
         if (callAFriendUsed) {
             return res.json({
                 text: 'You cannot use this help anymore.'
             });
-        }
+        };
 
         callAFriendUsed = true;
 
@@ -81,20 +82,46 @@ function roundRoute(app) {
             return res.json({
                 text: 'You cannot use this help anymore.'
             });
-        }
+        };
     
         halfBankUsed = true;
     
         const question = questions[score];
         const answersCopy = question.answers.filter(answer => answer.isCorrect !== 'true')
-        console.log(answersCopy)
         answersCopy.splice(~~(Math.random() * answersCopy.length), 1);
-        console.log(answersCopy)
     
         res.json({
             answersToRemove: answersCopy,
         });
     });
-}
+
+    app.get('/help/crowd', (req, res) => {
+        if (askTheCrowdUsed) {
+            return res.json({
+                text: 'You cannot use this help anymore.'
+            });
+        };
+    
+        askTheCrowdUsed = true;
+
+        let chart = [10, 20, 30, 40];
+
+        for (let i = chart.length - 1; i > 0; i--) {
+            const change = Math.floor(Math.random() * 20 - 10);
+            chart[i] += change;
+            chart[i - 1] -= change;
+        }
+
+        const question = questions[score];
+        const correctAnswer = question.answers.filter((answer) => answer.isCorrect === 'true')[0];
+        let indexOfCorrectAnswer = question.answers.indexOf(correctAnswer);
+
+        [chart[3], chart[indexOfCorrectAnswer]] = [chart[indexOfCorrectAnswer], chart[3]];
+        
+        res.json({
+            chart,
+        });
+    });
+};
 
 module.exports = roundRoute;

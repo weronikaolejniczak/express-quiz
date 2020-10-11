@@ -64,15 +64,26 @@ for (const button of buttons) {
 
 const scoreSpan = document.querySelector('#score');
 
-function handleAnswerFeedback(data) {
-    scoreSpan.innerText = data.score;
+/**
+ * * CLEAR
+*/
+function clear() {
     tipContainer.style.display = 'none';
     tip.innerText = '';
+
+    for (const button of buttons) {
+        button.style.display = 'block';
+    };
+};
+
+function handleAnswerFeedback(data) {
+    scoreSpan.innerText = data.score;
+    clear();
     showNextQuestion();
 }
 
 /**
- * * CALL A FRIEND HELP
+ * * CALL A FRIEND HELPER
 */
 function handleFriendAnswer(data) {
     tipContainer.style.display = 'block';
@@ -95,9 +106,11 @@ function callAFriend() {
 document.querySelector('#callAFriend').addEventListener('click', callAFriend)
 
 /**
- * * HALF BANK HELP
+ * * HALF BANK HELPER
 */
 function handleHalfBank(data) {
+    clear();
+
     if (typeof data.text === 'string') {
         tipContainer.style.display = 'block';
         tip.innerText = data.text;
@@ -107,10 +120,10 @@ function handleHalfBank(data) {
         for (const button of buttons) {
             if (answersToRemove.indexOf(button.innerText) > -1) {
                 button.style.display = 'none';
-            }
-        }
-    }
-}
+            };
+        };
+    };
+};
 
 function halfBank() {
     fetch('/help/half', {
@@ -126,3 +139,34 @@ function halfBank() {
 }
 
 document.querySelector('#halfBank').addEventListener('click', halfBank)
+
+/**
+ * * ASK THE CROWD HELPER
+*/
+function handleCrowdAnswer(data) {
+    clear();
+
+    if (typeof data.text === 'string') {
+        tipContainer.style.display = 'block';
+        tip.innerText = data.text;
+    } else {
+        data.chart.forEach((percent, index) => {
+            buttons[index].innerText = `${buttons[index].innerText}: ${percent}%`
+        });
+    };
+};
+
+function askTheCrowd() {
+    fetch('/help/crowd', {
+        method: 'GET',
+    })
+        .then(res => res.json())
+        .then(data => {
+            handleCrowdAnswer(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+document.querySelector('#askTheCrowd').addEventListener('click', askTheCrowd)
