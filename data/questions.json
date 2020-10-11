@@ -1,0 +1,87 @@
+[
+    {
+        "question": "When was JavaScript invented?",
+        "answers": [
+            {
+                "content": "Yesterday, right?",
+                "isCorrect": "false"
+            }, 
+            {
+                "content": "Java what?",
+                "isCorrect": "false"
+            },  
+            {
+                "content": "1997",
+                "isCorrect": "false"
+            },  
+            {
+                "content": "1995",
+                "isCorrect": "true"
+            }
+        ],
+        "explanation": "JavaScript was invented by Brendan Eich in 1995, and became an ECMA standard in 1997."
+    },
+    {
+        "question": "Which statement regarding 'let' and 'const' keywords is false?",
+        "answers": [
+            {
+                "content": "You can reassign a variable declared with 'let' keyword but not one declared with 'const' keyword.",
+                "isCorrect": "false"
+            }, 
+            {
+                "content": "'let' and 'const' are function scope.",
+                "isCorrect": "true"
+            },  
+            {
+                "content": "A variable declared with 'const' is immutable.",
+                "isCorrect": "false"
+            },  
+            {
+                "content": "You can reassign a property in a 'const' object.",
+                "isCorrect": "false"
+            }
+        ]
+    },
+    {
+        "question": "What is Node.js?",
+        "answers": [
+            {
+                "content": "It's an engine written in C++.",
+                "isCorrect": "false"
+            }, 
+            {
+                "content": "It's a JavaScript runtime environment.",
+                "isCorrect": "true"
+            },  
+            {
+                "content": "Why, of course! It's a programming language.",
+                "isCorrect": "false"
+            },  
+            {
+                "content": "Duh! It's a front end framework.",
+                "isCorrect": "false"
+            }
+        ]
+    },
+    {
+        "question": "What is Express?",
+        "answers": [
+            {
+                "content": "It's a front end framework.",
+                "isCorrect": "false"
+            }, 
+            {
+                "content": "It's a programming language.",
+                "isCorrect": "false"
+            },  
+            {
+                "content": "It's a back end web application framework.",
+                "isCorrect": "true"
+            },  
+            {
+                "content": "A Christmas movie about a boy that travels with his friends by train to the North Pole! Oh no, wait...",
+                "isCorrect": "false"
+            }
+        ]
+    }
+]
