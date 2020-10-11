@@ -75,6 +75,26 @@ function roundRoute(app) {
             text: doesFriendKnowAnswer ? `I believe the answer is... "${correctAnswer}"` : 'Sorry but I don\'t know the answer...'
         });
     });
+
+    app.get('/help/half', (req, res) => {
+        if (halfBankUsed) {
+            return res.json({
+                text: 'You cannot use this help anymore.'
+            });
+        }
+    
+        halfBankUsed = true;
+    
+        const question = questions[score];
+        const answersCopy = question.answers.filter(answer => answer.isCorrect !== 'true')
+        console.log(answersCopy)
+        answersCopy.splice(~~(Math.random() * answersCopy.length), 1);
+        console.log(answersCopy)
+    
+        res.json({
+            answersToRemove: answersCopy,
+        });
+    });
 }
 
 module.exports = roundRoute;

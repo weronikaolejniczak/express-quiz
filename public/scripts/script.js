@@ -93,3 +93,36 @@ function callAFriend() {
 }
 
 document.querySelector('#callAFriend').addEventListener('click', callAFriend)
+
+/**
+ * * HALF BANK HELP
+*/
+function handleHalfBank(data) {
+    if (typeof data.text === 'string') {
+        tipContainer.style.display = 'block';
+        tip.innerText = data.text;
+    } else {
+        const answersToRemove = [];
+        data.answersToRemove.forEach(answer => answersToRemove.push(answer.content))
+        for (const button of buttons) {
+            if (answersToRemove.indexOf(button.innerText) > -1) {
+                button.style.display = 'none';
+            }
+        }
+    }
+}
+
+function halfBank() {
+    fetch('/help/half', {
+        method: 'GET',
+    })
+        .then(res => res.json())
+        .then(data => {
+            handleHalfBank(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+document.querySelector('#halfBank').addEventListener('click', halfBank)
