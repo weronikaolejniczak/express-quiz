@@ -2,11 +2,11 @@ const question = document.querySelector('#question');
 
 function fillQuestionElements(data) {
     question.innerText = data.question;
-    for (const i in data.answers) {
-        const answerElement = document.querySelector(`#answer${parseInt(i) + 1}`);
-        answerElement.innerText = data.answers[i];
-    }
-}
+    data.answers.forEach((answer, index) => {
+        const answerElement = document.querySelector(`#answer${Number(index) + 1}`);
+        answerElement.innerText = answer;
+    });
+};
 
 function showNextQuestion() {
     fetch('/question', {
