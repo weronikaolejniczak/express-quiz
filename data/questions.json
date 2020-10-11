@@ -18,8 +18,7 @@
                 "content": "1995",
                 "isCorrect": "true"
             }
-        ],
-        "explanation": "JavaScript was invented by Brendan Eich in 1995, and became an ECMA standard in 1997."
+        ]
     },
     {
         "question": "Which statement regarding 'let' and 'const' keywords is false?",
