@@ -1,7 +1,12 @@
 const question = document.querySelector('#question');
 const gameBoard = document.querySelector('#game-board');
 const status = document.querySelector('#scoreboard > h2');
+const tipContainer = document.querySelector('#tip-container');
+const tip = document.querySelector('#tip');
 
+/**
+ * * HANDLE QUESTION
+*/
 function fillQuestionElements(data) {
     if (data.winner === true) {
         gameBoard.style.display = 'none';
@@ -33,6 +38,9 @@ function showNextQuestion() {
 
 showNextQuestion();
 
+/**
+ * * HANDLE ANSWER
+*/
 function sendAnswer(answerIndex) {
     fetch(`/answer/${answerIndex}`, {
         method: 'POST',
@@ -46,7 +54,7 @@ function sendAnswer(answerIndex) {
         });
 }
 
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('#answers > button');
 for (const button of buttons) {
     button.addEventListener('click', function() {
         const answerIndex = this.dataset.answer;
@@ -58,5 +66,30 @@ const scoreSpan = document.querySelector('#score');
 
 function handleAnswerFeedback(data) {
     scoreSpan.innerText = data.score;
+    tipContainer.style.display = 'none';
+    tip.innerText = '';
     showNextQuestion();
 }
+
+/**
+ * * CALL A FRIEND HELP
+*/
+function handleFriendAnswer(data) {
+    tipContainer.style.display = 'block';
+    tip.innerText = data.text;
+}
+
+function callAFriend() {
+    fetch('/help/friend', {
+        method: 'GET',
+    })
+        .then(res => res.json())
+        .then(data => {
+            handleFriendAnswer(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+document.querySelector('#callAFriend').addEventListener('click', callAFriend)

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coders</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
     <header>
@@ -17,7 +18,19 @@
 
     <main>
         <div id="game-board">
+            <div id="tip-container">
+                <h3>Tip!</h2>
+                <p id="tip"></p>
+            </div>
+
+            <div id="help">
+                <button id="callAFriend">Call a friend</button>
+                <button id="halfBank">Half bank</button>
+                <button id="askTheCrowd">Ask the crowd</button>
+            </div>
+
             <div id="question"></div>
+
             <div id="answers">
                 <button id="answer1" data-answer="0"></button>
                 <button id="answer2" data-answer="1"></button>

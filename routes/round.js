@@ -2,8 +2,8 @@ const fs = require('fs');
 
 function roundRoute(app) {
     let score = 0;
-    //let callAFriendUsed, askTheCrowdUsed, halfBankUsed = false;
     let questions;
+    let callAFriendUsed, halfBankUsed, askTheCrowdUsed = false;
     let isGameOver = false;
     
     fs.readFile('./data/questions.json', (err, content) => {
@@ -56,6 +56,25 @@ function roundRoute(app) {
             score
         });
     })
+
+    app.get('/help/friend', (req, res) => {
+        if (callAFriendUsed) {
+            return res.json({
+                text: 'You cannot use this help anymore.'
+            });
+        }
+
+        callAFriendUsed = true;
+
+        const doesFriendKnowAnswer = Math.random() < 0.5;
+        const question = questions[score];
+        const correctAnswer = question.answers.filter(answer => answer.isCorrect === 'true')[0].content;
+
+        res.json({
+            doesFriendKnowAnswer,
+            text: doesFriendKnowAnswer ? `I believe the answer is... "${correctAnswer}"` : 'Sorry but I don\'t know the answer...'
+        });
+    });
 }
 
 module.exports = roundRoute;
